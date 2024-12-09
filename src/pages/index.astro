@@ -1,0 +1,453 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<script>
+  const bgImages: NodeListOf<HTMLElement> = document.querySelectorAll(
+    '[data-js="bg-image"]',
+  );
+  const sliderItems: NodeListOf<HTMLElement> = document.querySelectorAll(
+    '[data-js="slider-item"]',
+  );
+  const buttonPrev = document.querySelector('[data-js="slider-button-prev"]');
+  const buttonNext = document.querySelector('[data-js="slider-button-next"]');
+  const circle: HTMLElement | null =
+    document.querySelector('[data-js="circle"]');
+
+  const changeImage = () => {
+    sliderItems.forEach((item, i) => {
+      if (Number(item.dataset.index) === 0) {
+        item.classList.add('is-active');
+
+        document
+          .querySelector('[data-js="bg-image"].is-active')
+          ?.classList.remove('is-active');
+        bgImages[i].classList.add('is-active');
+      }
+    });
+  };
+
+  const handlePrevious = () => {
+    sliderItems.forEach((item) => {
+      const index = Number(item.dataset.index);
+      item.dataset.index = `${index - 1 < -3 ? index * -1 : index - 1}`;
+
+      if (item.classList.contains('is-active')) {
+        item.classList.remove('is-active');
+      }
+    });
+
+    const currentRotation = Number(
+      circle?.style.getPropertyValue('--rotation').replace('deg', ''),
+    );
+    circle?.style.setProperty(
+      '--rotation',
+      `${currentRotation - 180 / sliderItems.length}deg`,
+    );
+
+    changeImage();
+  };
+
+  const handleNext = () => {
+    sliderItems.forEach((item) => {
+      const index = Number(item.dataset.index);
+      item.dataset.index = `${index + 1 > 3 ? index * -1 : index + 1}`;
+
+      if (item.classList.contains('is-active')) {
+        item.classList.remove('is-active');
+      }
+    });
+
+    const currentRotation = Number(
+      circle?.style.getPropertyValue('--rotation').replace('deg', ''),
+    );
+    circle?.style.setProperty(
+      '--rotation',
+      `${currentRotation + 180 / sliderItems.length}deg`,
+    );
+
+    changeImage();
+  };
+
+  buttonPrev?.addEventListener('click', handlePrevious);
+  buttonNext?.addEventListener('click', handleNext);
+  window.addEventListener('keydown', (event) => {
+    if (event.key === 'ArrowLeft') handlePrevious();
+    if (event.key === 'ArrowRight') handleNext();
+  });
+</script>
+
+<Layout>
+  <main>
+    <div class="background">
+      <img src="/images/moon.png" data-js="bg-image" />
+      <img src="/images/rose-smoke.png" data-js="bg-image" />
+      <img src="/images/astronaut.png" data-js="bg-image" />
+      <img
+        src="/images/flower-smoke.png"
+        data-js="bg-image"
+        class="is-active"
+      />
+      <img src="/images/dancer.png" data-js="bg-image" />
+      <img src="/images/woman-smoke.png" data-js="bg-image" />
+      <img src="/images/woman-rb.png" data-js="bg-image" />
+    </div>
+    <div class="overlay">
+      <div class="circle" data-js="circle"></div>
+    </div>
+    <div class="top"></div>
+    <div class="middle">
+      <button class="navigation" data-js="slider-button-prev">
+        <svg viewBox="0 0 10 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M8.84762 15.4288C8.9173 15.4985 8.97258 15.5812 9.01029 15.6722C9.048 15.7633 9.06741 15.8609 9.06741 15.9594C9.06741 16.0579 9.048 16.1555 9.01029 16.2466C8.97258 16.3376 8.9173 16.4203 8.84762 16.49C8.77794 16.5597 8.69521 16.615 8.60417 16.6527C8.51312 16.6904 8.41554 16.7098 8.317 16.7098C8.21845 16.7098 8.12087 16.6904 8.02982 16.6527C7.93878 16.615 7.85605 16.5597 7.78637 16.49L0.286371 8.99003C0.216639 8.92037 0.16132 8.83766 0.123577 8.74661C0.0858334 8.65556 0.0664062 8.55796 0.0664062 8.4594C0.0664062 8.36084 0.0858334 8.26324 0.123577 8.1722C0.16132 8.08115 0.216639 7.99843 0.286371 7.92878L7.78637 0.428776C7.9271 0.288046 8.11797 0.208984 8.317 0.208984C8.51602 0.208984 8.70689 0.288046 8.84762 0.428776C8.98835 0.569507 9.06741 0.760378 9.06741 0.959401C9.06741 1.15842 8.98835 1.3493 8.84762 1.49003L1.87731 8.4594L8.84762 15.4288Z"
+            fill="white"></path>
+        </svg>
+      </button>
+      <div class="slider">
+        <button class="slider-item" data-js="slider-item" data-index="-3">
+          <video src="/videos/moon.mp4"></video>
+          <div class="meta">
+            <img src="/images/rose-smoke.png" />
+            <div class="info">
+              <span class="title">Moonshot</span>
+              <span class="sub">The Rockets</span>
+            </div>
+          </div>
+        </button>
+        <button class="slider-item" data-js="slider-item" data-index="-2">
+          <video src="/videos/rose-smoke.mp4"></video>
+          <div class="meta">
+            <img src="/images/astronaut.png" />
+            <div class="info">
+              <span class="title">Cozy Rose</span>
+              <span class="sub">Loving</span>
+            </div>
+          </div>
+        </button>
+        <button class="slider-item" data-js="slider-item" data-index="-1">
+          <video src="/videos/astronaut.mp4"></video>
+          <div class="meta">
+            <img src="/images/flower-smoke.png" />
+            <div class="info">
+              <span class="title">Space Adventures</span>
+              <span class="sub">The Explorers</span>
+            </div>
+          </div>
+        </button>
+        <button
+          class="slider-item is-active"
+          data-js="slider-item"
+          data-index="0"
+        >
+          <video src="/videos/flower-smoke.mp4"></video>
+          <div class="meta">
+            <img src="/images/dancer.png" />
+            <div class="info">
+              <span class="title">Smoky Flowers</span>
+              <span class="sub">Greening</span>
+            </div>
+          </div>
+        </button>
+        <button class="slider-item" data-js="slider-item" data-index="1">
+          <video src="/videos/dancer.mp4"></video>
+          <div class="meta">
+            <img src="/images/woman-smoke.png" />
+            <div class="info">
+              <span class="title">Dreamy Dancing</span>
+              <span class="sub">Aftershow</span>
+            </div>
+          </div>
+        </button>
+        <button class="slider-item" data-js="slider-item" data-index="2">
+          <video src="/videos/woman-smoke.mp4"></video>
+          <div class="meta">
+            <img src="/images/woman-rb.png" />
+            <div class="info">
+              <span class="title">Stand Up</span>
+              <span class="sub">Move On</span>
+            </div>
+          </div>
+        </button>
+        <button class="slider-item" data-js="slider-item" data-index="3">
+          <video src="/videos/woman-rb.mp4"></video>
+          <div class="meta">
+            <img src="/images/moon.png" />
+            <div class="info">
+              <span class="title">Blurry Mess</span>
+              <span class="sub">Visionary</span>
+            </div>
+          </div>
+        </button>
+      </div>
+      <button class="navigation" data-js="slider-button-next">
+        <svg viewBox="0 0 10 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M9.34745 8.99003L1.84745 16.49C1.77777 16.5597 1.69504 16.615 1.604 16.6527C1.51295 16.6904 1.41537 16.7098 1.31682 16.7098C1.21828 16.7098 1.1207 16.6904 1.02965 16.6527C0.938606 16.615 0.855881 16.5597 0.786198 16.49C0.716515 16.4203 0.66124 16.3376 0.623528 16.2466C0.585816 16.1555 0.566406 16.0579 0.566406 15.9594C0.566406 15.8609 0.585816 15.7633 0.623528 15.6722C0.66124 15.5812 0.716515 15.4985 0.786198 15.4288L7.75651 8.4594L0.786198 1.49003C0.645467 1.3493 0.566406 1.15842 0.566406 0.959401C0.566406 0.760378 0.645467 0.569507 0.786198 0.428776C0.926928 0.288046 1.1178 0.208984 1.31682 0.208984C1.51585 0.208984 1.70672 0.288046 1.84745 0.428776L9.34745 7.92878C9.41718 7.99843 9.4725 8.08115 9.51024 8.1722C9.54799 8.26324 9.56741 8.36084 9.56741 8.4594C9.56741 8.55796 9.54799 8.65556 9.51024 8.74661C9.4725 8.83766 9.41718 8.92037 9.34745 8.99003Z"
+            fill="white"></path>
+        </svg>
+      </button>
+    </div>
+    <div class="bottom"></div>
+    <div class="credits">
+      design:
+      <a
+        href="https://www.linkedin.com/posts/cong-vo-design_uiuxdesign-prototype-motion-activity-7257209821551026176-7Sds"
+      >
+        Cong Vo
+      </a>
+    </div>
+  </main>
+</Layout>
+
+<style lang="scss">
+  @use '../styles/functions' as *;
+  @use '../styles/mixins' as *;
+
+  main {
+    position: relative;
+    display: grid;
+    grid-template-rows: 1fr 2fr 1fr;
+    width: 100%;
+    height: 100dvh;
+  }
+
+  .background {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    display: grid;
+
+    img {
+      grid-column: 1 / 1;
+      grid-row: 1 / 1;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 1s var(--ease-in-out-custom) 0.1s;
+
+      &.is-active {
+        opacity: 1;
+        transition-delay: 0s;
+      }
+    }
+  }
+
+  .overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgb(255 255 255 / 0.01);
+    backdrop-filter: blur(5px);
+    overflow: clip;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      margin: auto;
+      width: 90%;
+      aspect-ratio: 1 / 1;
+      border-radius: 100%;
+      box-shadow: 0 0 0 100vmax rgb(0 0 0 / 0.1);
+    }
+
+    .circle {
+      position: absolute;
+      inset: 0;
+      margin: auto;
+      width: 90%;
+      aspect-ratio: 1 / 1;
+      border: 1px solid rgb(255 255 255 / 0.25);
+      border-radius: 100%;
+      transform: rotate(var(--rotation, 0deg));
+      transition: transform 1s var(--ease-in-out-custom);
+
+      &::before,
+      &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        width: to-rem(10);
+        aspect-ratio: 1 / 1;
+        background-color: var(--c-light);
+        border-radius: 100%;
+      }
+
+      &::before {
+        left: 0;
+        transform: translate(-50%, -50%);
+      }
+
+      &::after {
+        right: 0;
+        transform: translate(50%, -50%);
+      }
+    }
+  }
+
+  .middle {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .navigation {
+      padding: to-rem(8);
+      margin-inline: to-rem(20);
+      width: to-rem(30);
+      aspect-ratio: 1 / 1;
+      background-color: rgb(255 255 255 / 0.2);
+      border-radius: 100%;
+      backdrop-filter: blur(5px);
+      transition: background-color 0.4s var(--ease-in-out-custom);
+
+      svg {
+        width: 100%;
+        height: 100%;
+      }
+
+      @include has-hover {
+        &:hover {
+          background-color: rgb(255 255 255 / 0.1);
+        }
+      }
+    }
+  }
+
+  .slider {
+    position: relative;
+    z-index: 1;
+    grid-row: 2 / 2;
+    display: grid;
+    max-width: 30%;
+    margin-inline: auto;
+
+    .slider-item {
+      grid-column: 1 / 1;
+      grid-row: 1 / 1;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: to-rem(20);
+      overflow: clip;
+      opacity: 0;
+      transition: all 1s var(--ease-in-out-custom);
+
+      &:not(.is-active) {
+        pointer-events: none;
+      }
+
+      video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .meta {
+        position: absolute;
+        top: clamp-fluid(8, 16);
+        left: clamp-fluid(8, 16);
+        display: flex;
+        gap: clamp-fluid(10, 18);
+        align-items: center;
+
+        img {
+          width: clamp-fluid(20, 60);
+          aspect-ratio: 1 / 1;
+          object-fit: cover;
+          border-radius: clamp-fluid(8, 12);
+        }
+
+        .info {
+          display: flex;
+          gap: clamp-fluid(2, 4);
+          flex-direction: column;
+          align-items: flex-start;
+          text-align: left;
+        }
+
+        .title,
+        .sub {
+          line-height: 1;
+          color: var(--c-light);
+        }
+
+        .title {
+          font-size: clamp-fluid(12, 22);
+          text-transform: uppercase;
+        }
+
+        .sub {
+          font-size: clamp-fluid(10, 18);
+          font-weight: var(--fw-thin);
+        }
+      }
+
+      &[data-index='0'] {
+        z-index: 0;
+        opacity: 1;
+      }
+
+      &[data-index='-1'],
+      &[data-index='1'] {
+        z-index: -1;
+        opacity: 0.9;
+        filter: blur(5px);
+      }
+
+      &[data-index='-1'] {
+        transform: translateX(-60%) scale(0.85);
+      }
+
+      &[data-index='1'] {
+        transform: translateX(60%) scale(0.85);
+      }
+
+      &[data-index='-2'],
+      &[data-index='2'] {
+        z-index: -2;
+        opacity: 0.8;
+        filter: blur(7px);
+      }
+
+      &[data-index='-2'] {
+        transform: translateX(-100%) scale(0.7);
+      }
+
+      &[data-index='2'] {
+        transform: translateX(100%) scale(0.7);
+      }
+
+      &[data-index='-3'],
+      &[data-index='3'] {
+        z-index: -3;
+        opacity: 0;
+        filter: blur(10px);
+      }
+
+      &[data-index='-3'] {
+        transform: translateX(-120%) scale(0);
+      }
+
+      &[data-index='3'] {
+        transform: translateX(120%) scale(0);
+      }
+    }
+  }
+
+  .credits {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+    padding: to-rem(2) to-rem(10);
+    font-size: to-rem(14);
+    color: var(--c-light);
+
+    a {
+      text-decoration: none;
+    }
+  }
+</style>
