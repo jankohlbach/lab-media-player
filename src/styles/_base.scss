@@ -66,8 +66,17 @@ a {
 
 // custom
 ::selection {
-  background-color: var(--c-dark);
   color: var(--c-light);
+  background-color: var(--c-dark);
+}
+
+html {
+  &.no-overscroll {
+    &,
+    body {
+      overscroll-behavior: none;
+    }
+  }
 }
 
 body {
@@ -88,7 +97,8 @@ body {
 }
 
 // scroll
-html.lenis, html.lenis body {
+html.lenis,
+html.lenis body {
   height: auto;
 }
 

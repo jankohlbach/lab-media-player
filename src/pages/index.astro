@@ -201,9 +201,6 @@ import Layout from '../layouts/Layout.astro';
 </Layout>
 
 <style lang="scss">
-  @use '../styles/functions' as *;
-  @use '../styles/mixins' as *;
-
   main {
     position: relative;
     display: grid;
@@ -225,7 +222,7 @@ import Layout from '../layouts/Layout.astro';
       height: 100%;
       object-fit: cover;
       opacity: 0;
-      transition: opacity 1s var(--ease-in-out-custom) 0.1s;
+      transition: opacity 1s var(--ease-smooth) 0.1s;
 
       &.is-active {
         opacity: 1;
@@ -261,7 +258,7 @@ import Layout from '../layouts/Layout.astro';
       border: 1px solid rgb(255 255 255 / 0.25);
       border-radius: 100%;
       transform: rotate(var(--rotation, 0deg));
-      transition: transform 1s var(--ease-in-out-custom);
+      transition: transform 1s var(--ease-smooth);
 
       &::before,
       &::after {
@@ -301,7 +298,7 @@ import Layout from '../layouts/Layout.astro';
       background-color: rgb(255 255 255 / 0.2);
       border-radius: 100%;
       backdrop-filter: blur(5px);
-      transition: background-color 0.4s var(--ease-in-out-custom);
+      transition: background-color 0.4s var(--ease-smooth);
 
       svg {
         width: 100%;
@@ -333,7 +330,7 @@ import Layout from '../layouts/Layout.astro';
       border-radius: to-rem(20);
       overflow: clip;
       opacity: 0;
-      transition: all 1s var(--ease-in-out-custom);
+      transition: all 1s var(--ease-smooth);
 
       &:not(.is-active) {
         pointer-events: none;
