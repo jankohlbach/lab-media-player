@@ -3,6 +3,11 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <script>
+  import gsap from 'gsap';
+  import { Flip } from 'gsap/all';
+
+  gsap.registerPlugin(Flip);
+
   const bgImages: NodeListOf<HTMLElement> = document.querySelectorAll(
     '[data-js="bg-image"]',
   );
@@ -18,6 +23,7 @@ import Layout from '../layouts/Layout.astro';
     sliderItems.forEach((item, i) => {
       if (Number(item.dataset.index) === 0) {
         item.classList.add('is-active');
+        item.focus();
 
         document
           .querySelector('[data-js="bg-image"].is-active')
@@ -69,11 +75,46 @@ import Layout from '../layouts/Layout.astro';
     changeImage();
   };
 
+  const enterFullscreen = (item: HTMLElement) => {
+    const state = Flip.getState(item, {
+      props: 'borderRadius',
+    });
+
+    item.classList.add('is-fullscreen', 'disable-transition');
+
+    Flip.from(state, {
+      duration: 1.2,
+      ease: 'power4.inOut',
+    });
+  };
+
+  const leaveFullscreen = () => {
+    const openItem = document.querySelector('.is-fullscreen');
+
+    const state = Flip.getState(openItem, {
+      props: 'borderRadius',
+    });
+
+    openItem?.classList.remove('is-fullscreen');
+    gsap.set(openItem, { clearProps: true });
+
+    Flip.from(state, {
+      duration: 1.2,
+      ease: 'power4.inOut',
+      absolute: true,
+      toggleClass: 'disable-transition',
+    });
+  };
+
   buttonPrev?.addEventListener('click', handlePrevious);
   buttonNext?.addEventListener('click', handleNext);
   window.addEventListener('keydown', (event) => {
     if (event.key === 'ArrowLeft') handlePrevious();
     if (event.key === 'ArrowRight') handleNext();
+    if (event.key === 'Escape') leaveFullscreen();
+  });
+  sliderItems.forEach((item) => {
+    item.addEventListener('click', () => enterFullscreen(item));
   });
 </script>
 
@@ -213,6 +254,7 @@ import Layout from '../layouts/Layout.astro';
     grid-template-rows: 1fr 2fr 1fr;
     width: 100%;
     height: 100dvh;
+    overflow: hidden;
   }
 
   .background {
@@ -295,7 +337,6 @@ import Layout from '../layouts/Layout.astro';
     display: flex;
     justify-content: space-between;
     align-items: center;
-    overflow: hidden;
 
     .navigation {
       align-self: flex-end;
@@ -337,7 +378,13 @@ import Layout from '../layouts/Layout.astro';
       border-radius: clamp-fluid(8, 20);
       overflow: clip;
       opacity: 0;
+      outline: none;
       transition: all 1.2s var(--ease-snappy);
+
+      &:focus-visible {
+        outline: var(--c-light) solid 3px;
+        outline-offset: 5px;
+      }
 
       &:not(.is-active) {
         pointer-events: none;
@@ -464,6 +511,18 @@ import Layout from '../layouts/Layout.astro';
 
       &[data-index='3'] {
         transform: translateX(120%) scale(0);
+      }
+
+      &.is-fullscreen {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+      }
+
+      &.disable-transition {
+        transition: none;
       }
     }
   }
