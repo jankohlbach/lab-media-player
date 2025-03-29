@@ -110,8 +110,8 @@ import Layout from '../layouts/Layout.astro';
           <div class="meta">
             <img src="/images/rose-smoke.png" />
             <div class="info">
-              <span class="title">Moonshot</span>
-              <span class="sub">The Rockets</span>
+              <span class="title mask"><span>Moonshot</span></span>
+              <span class="sub mask"><span>The Rockets</span></span>
             </div>
           </div>
         </button>
@@ -120,8 +120,8 @@ import Layout from '../layouts/Layout.astro';
           <div class="meta">
             <img src="/images/astronaut.png" />
             <div class="info">
-              <span class="title">Cozy Rose</span>
-              <span class="sub">Loving</span>
+              <span class="title mask"><span>Cozy Rose</span></span>
+              <span class="sub mask"><span>Loving</span></span>
             </div>
           </div>
         </button>
@@ -130,8 +130,8 @@ import Layout from '../layouts/Layout.astro';
           <div class="meta">
             <img src="/images/flower-smoke.png" />
             <div class="info">
-              <span class="title">Space Adventures</span>
-              <span class="sub">The Explorers</span>
+              <span class="title mask"><span>Space Adventures</span></span>
+              <span class="sub mask"><span>The Explorers</span></span>
             </div>
           </div>
         </button>
@@ -144,8 +144,8 @@ import Layout from '../layouts/Layout.astro';
           <div class="meta">
             <img src="/images/dancer.png" />
             <div class="info">
-              <span class="title">Smoky Flowers</span>
-              <span class="sub">Greening</span>
+              <span class="title mask"><span>Smoky Flowers</span></span>
+              <span class="sub mask"><span>Greening</span></span>
             </div>
           </div>
         </button>
@@ -154,8 +154,8 @@ import Layout from '../layouts/Layout.astro';
           <div class="meta">
             <img src="/images/woman-smoke.png" />
             <div class="info">
-              <span class="title">Dreamy Dancing</span>
-              <span class="sub">Aftershow</span>
+              <span class="title mask"><span>Dreamy Dancing</span></span>
+              <span class="sub mask"><span>Aftershow</span></span>
             </div>
           </div>
         </button>
@@ -164,8 +164,8 @@ import Layout from '../layouts/Layout.astro';
           <div class="meta">
             <img src="/images/woman-rb.png" />
             <div class="info">
-              <span class="title">Stand Up</span>
-              <span class="sub">Move On</span>
+              <span class="title mask"><span>Stand Up</span></span>
+              <span class="sub mask"><span>Move On</span></span>
             </div>
           </div>
         </button>
@@ -174,8 +174,8 @@ import Layout from '../layouts/Layout.astro';
           <div class="meta">
             <img src="/images/moon.png" />
             <div class="info">
-              <span class="title">Blurry Mess</span>
-              <span class="sub">Visionary</span>
+              <span class="title mask"><span>Blurry Mess</span></span>
+              <span class="sub mask"><span>Visionary</span></span>
             </div>
           </div>
         </button>
@@ -366,7 +366,7 @@ import Layout from '../layouts/Layout.astro';
 
         .info {
           display: flex;
-          gap: clamp-fluid(2, 4);
+          gap: to-rem(2);
           flex-direction: column;
           align-items: flex-start;
           text-align: left;
@@ -381,11 +381,38 @@ import Layout from '../layouts/Layout.astro';
         .title {
           font-size: clamp-fluid(12, 22);
           text-transform: uppercase;
+
+          &.mask > span {
+            transition-delay: 0.2s;
+          }
         }
 
         .sub {
           font-size: clamp-fluid(10, 18);
           font-weight: var(--fw-thin);
+          line-height: 1.2;
+
+          &.mask > span {
+            transition-delay: 0.3s;
+          }
+        }
+
+        .mask {
+          overflow: hidden;
+
+          > span {
+            display: block;
+            transform: translateY(100%);
+            transition: transform 1s var(--ease-snappy);
+          }
+        }
+      }
+
+      &.is-active {
+        .meta .mask {
+          > span {
+            transform: translateY(0);
+          }
         }
       }
 
