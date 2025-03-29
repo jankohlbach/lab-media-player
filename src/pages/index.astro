@@ -190,12 +190,18 @@ import Layout from '../layouts/Layout.astro';
     </div>
     <div class="bottom"></div>
     <div class="credits">
-      design:
-      <a
-        href="https://www.linkedin.com/posts/cong-vo-design_uiuxdesign-prototype-motion-activity-7257209821551026176-7Sds"
-      >
-        Cong Vo
-      </a>
+      <div>
+        dev:
+        <a href="https://jankohlbach.com">Jan Kohlbach</a>
+      </div>
+      <div>
+        design:
+        <a
+          href="https://www.linkedin.com/posts/cong-vo-design_uiuxdesign-prototype-motion-activity-7257209821551026176-7Sds"
+        >
+          Cong Vo
+        </a>
+      </div>
     </div>
   </main>
 </Layout>
@@ -222,7 +228,7 @@ import Layout from '../layouts/Layout.astro';
       height: 100%;
       object-fit: cover;
       opacity: 0;
-      transition: opacity 1s var(--ease-smooth) 0.1s;
+      transition: opacity 1.2s var(--ease-snappy) 0.1s;
 
       &.is-active {
         opacity: 1;
@@ -243,7 +249,7 @@ import Layout from '../layouts/Layout.astro';
       position: absolute;
       inset: 0;
       margin: auto;
-      width: 90%;
+      width: 85%;
       aspect-ratio: 1 / 1;
       border-radius: 100%;
       box-shadow: 0 0 0 100vmax rgb(0 0 0 / 0.1);
@@ -253,12 +259,12 @@ import Layout from '../layouts/Layout.astro';
       position: absolute;
       inset: 0;
       margin: auto;
-      width: 90%;
+      width: 85%;
       aspect-ratio: 1 / 1;
       border: 1px solid rgb(255 255 255 / 0.25);
       border-radius: 100%;
       transform: rotate(var(--rotation, 0deg));
-      transition: transform 1s var(--ease-smooth);
+      transition: transform 1.2s var(--ease-snappy);
 
       &::before,
       &::after {
@@ -289,8 +295,10 @@ import Layout from '../layouts/Layout.astro';
     display: flex;
     justify-content: space-between;
     align-items: center;
+    overflow: hidden;
 
     .navigation {
+      align-self: flex-end;
       padding: to-rem(8);
       margin-inline: to-rem(20);
       width: to-rem(30);
@@ -316,9 +324,8 @@ import Layout from '../layouts/Layout.astro';
   .slider {
     position: relative;
     z-index: 1;
-    grid-row: 2 / 2;
     display: grid;
-    max-width: 30%;
+    max-width: 45%;
     margin-inline: auto;
 
     .slider-item {
@@ -327,10 +334,10 @@ import Layout from '../layouts/Layout.astro';
       width: 100%;
       height: 100%;
       object-fit: cover;
-      border-radius: to-rem(20);
+      border-radius: clamp-fluid(8, 20);
       overflow: clip;
       opacity: 0;
-      transition: all 1s var(--ease-smooth);
+      transition: all 1.2s var(--ease-snappy);
 
       &:not(.is-active) {
         pointer-events: none;
@@ -354,7 +361,7 @@ import Layout from '../layouts/Layout.astro';
           width: clamp-fluid(20, 60);
           aspect-ratio: 1 / 1;
           object-fit: cover;
-          border-radius: clamp-fluid(8, 12);
+          border-radius: clamp-fluid(6, 12);
         }
 
         .info {
@@ -443,8 +450,24 @@ import Layout from '../layouts/Layout.astro';
     font-size: to-rem(14);
     color: var(--c-light);
 
+    > div {
+      line-height: 1.2;
+    }
+
     a {
       text-decoration: none;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .middle {
+      .navigation {
+        align-self: center;
+      }
+    }
+
+    .slider {
+      max-width: 30%;
     }
   }
 </style>
