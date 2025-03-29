@@ -76,6 +76,8 @@ import Layout from '../layouts/Layout.astro';
   };
 
   const enterFullscreen = (item: HTMLElement) => {
+    const video = item.querySelector('video');
+
     const state = Flip.getState(item, {
       props: 'borderRadius',
     });
@@ -85,11 +87,19 @@ import Layout from '../layouts/Layout.astro';
     Flip.from(state, {
       duration: 1.2,
       ease: 'power4.inOut',
+      onComplete: () => {
+        video?.setAttribute('controls', '');
+        video?.play();
+      },
     });
   };
 
   const leaveFullscreen = () => {
     const openItem = document.querySelector('.is-fullscreen');
+    const video = openItem?.querySelector('video');
+
+    video?.removeAttribute('controls');
+    video?.pause();
 
     const state = Flip.getState(openItem, {
       props: 'borderRadius',
@@ -147,7 +157,8 @@ import Layout from '../layouts/Layout.astro';
       </button>
       <div class="slider">
         <button class="slider-item" data-js="slider-item" data-index="-3">
-          <video src="/videos/moon.mp4"></video>
+          <video src="/videos/moon.mp4" loop playsinline disablepictureinpicture
+          ></video>
           <div class="meta">
             <img src="/images/rose-smoke.png" />
             <div class="info">
@@ -157,7 +168,11 @@ import Layout from '../layouts/Layout.astro';
           </div>
         </button>
         <button class="slider-item" data-js="slider-item" data-index="-2">
-          <video src="/videos/rose-smoke.mp4"></video>
+          <video
+            src="/videos/rose-smoke.mp4"
+            loop
+            playsinline
+            disablepictureinpicture></video>
           <div class="meta">
             <img src="/images/astronaut.png" />
             <div class="info">
@@ -167,7 +182,11 @@ import Layout from '../layouts/Layout.astro';
           </div>
         </button>
         <button class="slider-item" data-js="slider-item" data-index="-1">
-          <video src="/videos/astronaut.mp4"></video>
+          <video
+            src="/videos/astronaut.mp4"
+            loop
+            playsinline
+            disablepictureinpicture></video>
           <div class="meta">
             <img src="/images/flower-smoke.png" />
             <div class="info">
@@ -181,7 +200,11 @@ import Layout from '../layouts/Layout.astro';
           data-js="slider-item"
           data-index="0"
         >
-          <video src="/videos/flower-smoke.mp4"></video>
+          <video
+            src="/videos/flower-smoke.mp4"
+            loop
+            playsinline
+            disablepictureinpicture></video>
           <div class="meta">
             <img src="/images/dancer.png" />
             <div class="info">
@@ -191,7 +214,11 @@ import Layout from '../layouts/Layout.astro';
           </div>
         </button>
         <button class="slider-item" data-js="slider-item" data-index="1">
-          <video src="/videos/dancer.mp4"></video>
+          <video
+            src="/videos/dancer.mp4"
+            loop
+            playsinline
+            disablepictureinpicture></video>
           <div class="meta">
             <img src="/images/woman-smoke.png" />
             <div class="info">
@@ -201,7 +228,11 @@ import Layout from '../layouts/Layout.astro';
           </div>
         </button>
         <button class="slider-item" data-js="slider-item" data-index="2">
-          <video src="/videos/woman-smoke.mp4"></video>
+          <video
+            src="/videos/woman-smoke.mp4"
+            loop
+            playsinline
+            disablepictureinpicture></video>
           <div class="meta">
             <img src="/images/woman-rb.png" />
             <div class="info">
@@ -211,7 +242,11 @@ import Layout from '../layouts/Layout.astro';
           </div>
         </button>
         <button class="slider-item" data-js="slider-item" data-index="3">
-          <video src="/videos/woman-rb.mp4"></video>
+          <video
+            src="/videos/woman-rb.mp4"
+            loop
+            playsinline
+            disablepictureinpicture></video>
           <div class="meta">
             <img src="/images/moon.png" />
             <div class="info">
