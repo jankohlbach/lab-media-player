@@ -268,12 +268,13 @@ import Layout from '../layouts/Layout.astro';
     <div class="credits">
       <div>
         dev:
-        <a href="https://jankohlbach.com">Jan Kohlbach</a>
+        <a href="https://jankohlbach.com" target="_blank">Jan Kohlbach</a>
       </div>
       <div>
         design:
         <a
           href="https://www.linkedin.com/posts/cong-vo-design_uiuxdesign-prototype-motion-activity-7257209821551026176-7Sds"
+          target="_blank"
         >
           Cong Vo
         </a>
@@ -378,6 +379,7 @@ import Layout from '../layouts/Layout.astro';
       padding: to-rem(8);
       margin-inline: to-rem(20);
       width: to-rem(30);
+      height: to-rem(30);
       aspect-ratio: 1 / 1;
       background-color: rgb(255 255 255 / 0.2);
       border-radius: 100%;
@@ -501,6 +503,7 @@ import Layout from '../layouts/Layout.astro';
       &[data-index='0'] {
         z-index: 0;
         opacity: 1;
+        transform: translateZ(0);
       }
 
       &[data-index='-1'],
