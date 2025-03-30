@@ -14,6 +14,9 @@ import Layout from '../layouts/Layout.astro';
   const sliderItems: NodeListOf<HTMLElement> = document.querySelectorAll(
     '[data-js="slider-item"]',
   );
+  const buttonBacks: NodeListOf<HTMLElement> = document.querySelectorAll(
+    '[data-js="button-back"]',
+  );
   const buttonPrev = document.querySelector('[data-js="slider-button-prev"]');
   const buttonNext = document.querySelector('[data-js="slider-button-next"]');
   const circle: HTMLElement | null =
@@ -94,7 +97,9 @@ import Layout from '../layouts/Layout.astro';
     });
   };
 
-  const leaveFullscreen = () => {
+  const leaveFullscreen = (e: Event | null) => {
+    e?.stopPropagation();
+
     const openItem = document.querySelector('.is-fullscreen');
     const video = openItem?.querySelector('video');
 
@@ -121,10 +126,13 @@ import Layout from '../layouts/Layout.astro';
   window.addEventListener('keydown', (event) => {
     if (event.key === 'ArrowLeft') handlePrevious();
     if (event.key === 'ArrowRight') handleNext();
-    if (event.key === 'Escape') leaveFullscreen();
+    if (event.key === 'Escape') leaveFullscreen(null);
   });
   sliderItems.forEach((item) => {
     item.addEventListener('click', () => enterFullscreen(item));
+  });
+  buttonBacks.forEach((button) => {
+    button.addEventListener('click', leaveFullscreen);
   });
 </script>
 
@@ -159,6 +167,18 @@ import Layout from '../layouts/Layout.astro';
         <button class="slider-item" data-js="slider-item" data-index="-3">
           <video src="/videos/moon.mp4" loop playsinline disablepictureinpicture
           ></video>
+          <div class="back" role="button" data-js="button-back">
+            <svg
+              viewBox="0 0 10 17"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8.84762 15.4288C8.9173 15.4985 8.97258 15.5812 9.01029 15.6722C9.048 15.7633 9.06741 15.8609 9.06741 15.9594C9.06741 16.0579 9.048 16.1555 9.01029 16.2466C8.97258 16.3376 8.9173 16.4203 8.84762 16.49C8.77794 16.5597 8.69521 16.615 8.60417 16.6527C8.51312 16.6904 8.41554 16.7098 8.317 16.7098C8.21845 16.7098 8.12087 16.6904 8.02982 16.6527C7.93878 16.615 7.85605 16.5597 7.78637 16.49L0.286371 8.99003C0.216639 8.92037 0.16132 8.83766 0.123577 8.74661C0.0858334 8.65556 0.0664062 8.55796 0.0664062 8.4594C0.0664062 8.36084 0.0858334 8.26324 0.123577 8.1722C0.16132 8.08115 0.216639 7.99843 0.286371 7.92878L7.78637 0.428776C7.9271 0.288046 8.11797 0.208984 8.317 0.208984C8.51602 0.208984 8.70689 0.288046 8.84762 0.428776C8.98835 0.569507 9.06741 0.760378 9.06741 0.959401C9.06741 1.15842 8.98835 1.3493 8.84762 1.49003L1.87731 8.4594L8.84762 15.4288Z"
+                fill="white"></path>
+            </svg>
+            <span>back</span>
+          </div>
           <div class="meta">
             <img src="/images/rose-smoke.png" />
             <div class="info">
@@ -173,6 +193,18 @@ import Layout from '../layouts/Layout.astro';
             loop
             playsinline
             disablepictureinpicture></video>
+          <div class="back" role="button" data-js="button-back">
+            <svg
+              viewBox="0 0 10 17"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8.84762 15.4288C8.9173 15.4985 8.97258 15.5812 9.01029 15.6722C9.048 15.7633 9.06741 15.8609 9.06741 15.9594C9.06741 16.0579 9.048 16.1555 9.01029 16.2466C8.97258 16.3376 8.9173 16.4203 8.84762 16.49C8.77794 16.5597 8.69521 16.615 8.60417 16.6527C8.51312 16.6904 8.41554 16.7098 8.317 16.7098C8.21845 16.7098 8.12087 16.6904 8.02982 16.6527C7.93878 16.615 7.85605 16.5597 7.78637 16.49L0.286371 8.99003C0.216639 8.92037 0.16132 8.83766 0.123577 8.74661C0.0858334 8.65556 0.0664062 8.55796 0.0664062 8.4594C0.0664062 8.36084 0.0858334 8.26324 0.123577 8.1722C0.16132 8.08115 0.216639 7.99843 0.286371 7.92878L7.78637 0.428776C7.9271 0.288046 8.11797 0.208984 8.317 0.208984C8.51602 0.208984 8.70689 0.288046 8.84762 0.428776C8.98835 0.569507 9.06741 0.760378 9.06741 0.959401C9.06741 1.15842 8.98835 1.3493 8.84762 1.49003L1.87731 8.4594L8.84762 15.4288Z"
+                fill="white"></path>
+            </svg>
+            <span>back</span>
+          </div>
           <div class="meta">
             <img src="/images/astronaut.png" />
             <div class="info">
@@ -187,6 +219,18 @@ import Layout from '../layouts/Layout.astro';
             loop
             playsinline
             disablepictureinpicture></video>
+          <div class="back" role="button" data-js="button-back">
+            <svg
+              viewBox="0 0 10 17"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8.84762 15.4288C8.9173 15.4985 8.97258 15.5812 9.01029 15.6722C9.048 15.7633 9.06741 15.8609 9.06741 15.9594C9.06741 16.0579 9.048 16.1555 9.01029 16.2466C8.97258 16.3376 8.9173 16.4203 8.84762 16.49C8.77794 16.5597 8.69521 16.615 8.60417 16.6527C8.51312 16.6904 8.41554 16.7098 8.317 16.7098C8.21845 16.7098 8.12087 16.6904 8.02982 16.6527C7.93878 16.615 7.85605 16.5597 7.78637 16.49L0.286371 8.99003C0.216639 8.92037 0.16132 8.83766 0.123577 8.74661C0.0858334 8.65556 0.0664062 8.55796 0.0664062 8.4594C0.0664062 8.36084 0.0858334 8.26324 0.123577 8.1722C0.16132 8.08115 0.216639 7.99843 0.286371 7.92878L7.78637 0.428776C7.9271 0.288046 8.11797 0.208984 8.317 0.208984C8.51602 0.208984 8.70689 0.288046 8.84762 0.428776C8.98835 0.569507 9.06741 0.760378 9.06741 0.959401C9.06741 1.15842 8.98835 1.3493 8.84762 1.49003L1.87731 8.4594L8.84762 15.4288Z"
+                fill="white"></path>
+            </svg>
+            <span>back</span>
+          </div>
           <div class="meta">
             <img src="/images/flower-smoke.png" />
             <div class="info">
@@ -205,6 +249,18 @@ import Layout from '../layouts/Layout.astro';
             loop
             playsinline
             disablepictureinpicture></video>
+          <div class="back" role="button" data-js="button-back">
+            <svg
+              viewBox="0 0 10 17"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8.84762 15.4288C8.9173 15.4985 8.97258 15.5812 9.01029 15.6722C9.048 15.7633 9.06741 15.8609 9.06741 15.9594C9.06741 16.0579 9.048 16.1555 9.01029 16.2466C8.97258 16.3376 8.9173 16.4203 8.84762 16.49C8.77794 16.5597 8.69521 16.615 8.60417 16.6527C8.51312 16.6904 8.41554 16.7098 8.317 16.7098C8.21845 16.7098 8.12087 16.6904 8.02982 16.6527C7.93878 16.615 7.85605 16.5597 7.78637 16.49L0.286371 8.99003C0.216639 8.92037 0.16132 8.83766 0.123577 8.74661C0.0858334 8.65556 0.0664062 8.55796 0.0664062 8.4594C0.0664062 8.36084 0.0858334 8.26324 0.123577 8.1722C0.16132 8.08115 0.216639 7.99843 0.286371 7.92878L7.78637 0.428776C7.9271 0.288046 8.11797 0.208984 8.317 0.208984C8.51602 0.208984 8.70689 0.288046 8.84762 0.428776C8.98835 0.569507 9.06741 0.760378 9.06741 0.959401C9.06741 1.15842 8.98835 1.3493 8.84762 1.49003L1.87731 8.4594L8.84762 15.4288Z"
+                fill="white"></path>
+            </svg>
+            <span>back</span>
+          </div>
           <div class="meta">
             <img src="/images/dancer.png" />
             <div class="info">
@@ -219,6 +275,18 @@ import Layout from '../layouts/Layout.astro';
             loop
             playsinline
             disablepictureinpicture></video>
+          <div class="back" role="button" data-js="button-back">
+            <svg
+              viewBox="0 0 10 17"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8.84762 15.4288C8.9173 15.4985 8.97258 15.5812 9.01029 15.6722C9.048 15.7633 9.06741 15.8609 9.06741 15.9594C9.06741 16.0579 9.048 16.1555 9.01029 16.2466C8.97258 16.3376 8.9173 16.4203 8.84762 16.49C8.77794 16.5597 8.69521 16.615 8.60417 16.6527C8.51312 16.6904 8.41554 16.7098 8.317 16.7098C8.21845 16.7098 8.12087 16.6904 8.02982 16.6527C7.93878 16.615 7.85605 16.5597 7.78637 16.49L0.286371 8.99003C0.216639 8.92037 0.16132 8.83766 0.123577 8.74661C0.0858334 8.65556 0.0664062 8.55796 0.0664062 8.4594C0.0664062 8.36084 0.0858334 8.26324 0.123577 8.1722C0.16132 8.08115 0.216639 7.99843 0.286371 7.92878L7.78637 0.428776C7.9271 0.288046 8.11797 0.208984 8.317 0.208984C8.51602 0.208984 8.70689 0.288046 8.84762 0.428776C8.98835 0.569507 9.06741 0.760378 9.06741 0.959401C9.06741 1.15842 8.98835 1.3493 8.84762 1.49003L1.87731 8.4594L8.84762 15.4288Z"
+                fill="white"></path>
+            </svg>
+            <span>back</span>
+          </div>
           <div class="meta">
             <img src="/images/woman-smoke.png" />
             <div class="info">
@@ -233,6 +301,18 @@ import Layout from '../layouts/Layout.astro';
             loop
             playsinline
             disablepictureinpicture></video>
+          <div class="back" role="button" data-js="button-back">
+            <svg
+              viewBox="0 0 10 17"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8.84762 15.4288C8.9173 15.4985 8.97258 15.5812 9.01029 15.6722C9.048 15.7633 9.06741 15.8609 9.06741 15.9594C9.06741 16.0579 9.048 16.1555 9.01029 16.2466C8.97258 16.3376 8.9173 16.4203 8.84762 16.49C8.77794 16.5597 8.69521 16.615 8.60417 16.6527C8.51312 16.6904 8.41554 16.7098 8.317 16.7098C8.21845 16.7098 8.12087 16.6904 8.02982 16.6527C7.93878 16.615 7.85605 16.5597 7.78637 16.49L0.286371 8.99003C0.216639 8.92037 0.16132 8.83766 0.123577 8.74661C0.0858334 8.65556 0.0664062 8.55796 0.0664062 8.4594C0.0664062 8.36084 0.0858334 8.26324 0.123577 8.1722C0.16132 8.08115 0.216639 7.99843 0.286371 7.92878L7.78637 0.428776C7.9271 0.288046 8.11797 0.208984 8.317 0.208984C8.51602 0.208984 8.70689 0.288046 8.84762 0.428776C8.98835 0.569507 9.06741 0.760378 9.06741 0.959401C9.06741 1.15842 8.98835 1.3493 8.84762 1.49003L1.87731 8.4594L8.84762 15.4288Z"
+                fill="white"></path>
+            </svg>
+            <span>back</span>
+          </div>
           <div class="meta">
             <img src="/images/woman-rb.png" />
             <div class="info">
@@ -247,6 +327,18 @@ import Layout from '../layouts/Layout.astro';
             loop
             playsinline
             disablepictureinpicture></video>
+          <div class="back" role="button" data-js="button-back">
+            <svg
+              viewBox="0 0 10 17"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8.84762 15.4288C8.9173 15.4985 8.97258 15.5812 9.01029 15.6722C9.048 15.7633 9.06741 15.8609 9.06741 15.9594C9.06741 16.0579 9.048 16.1555 9.01029 16.2466C8.97258 16.3376 8.9173 16.4203 8.84762 16.49C8.77794 16.5597 8.69521 16.615 8.60417 16.6527C8.51312 16.6904 8.41554 16.7098 8.317 16.7098C8.21845 16.7098 8.12087 16.6904 8.02982 16.6527C7.93878 16.615 7.85605 16.5597 7.78637 16.49L0.286371 8.99003C0.216639 8.92037 0.16132 8.83766 0.123577 8.74661C0.0858334 8.65556 0.0664062 8.55796 0.0664062 8.4594C0.0664062 8.36084 0.0858334 8.26324 0.123577 8.1722C0.16132 8.08115 0.216639 7.99843 0.286371 7.92878L7.78637 0.428776C7.9271 0.288046 8.11797 0.208984 8.317 0.208984C8.51602 0.208984 8.70689 0.288046 8.84762 0.428776C8.98835 0.569507 9.06741 0.760378 9.06741 0.959401C9.06741 1.15842 8.98835 1.3493 8.84762 1.49003L1.87731 8.4594L8.84762 15.4288Z"
+                fill="white"></path>
+            </svg>
+            <span>back</span>
+          </div>
           <div class="meta">
             <img src="/images/moon.png" />
             <div class="info">
@@ -438,6 +530,26 @@ import Layout from '../layouts/Layout.astro';
         object-fit: cover;
       }
 
+      .back {
+        position: absolute;
+        top: clamp-fluid(8, 16);
+        left: clamp-fluid(8, 16);
+        display: flex;
+        gap: to-rem(12);
+        opacity: 0;
+        transition: opacity 0.4s var(--ease-smooth) 0s;
+
+        svg {
+          width: to-rem(8);
+        }
+
+        span {
+          font-size: to-rem(14);
+          color: var(--c-light);
+          text-transform: uppercase;
+        }
+      }
+
       .meta {
         position: absolute;
         top: clamp-fluid(8, 16);
@@ -445,17 +557,21 @@ import Layout from '../layouts/Layout.astro';
         display: flex;
         gap: clamp-fluid(10, 18);
         align-items: center;
+        transition: top 1.2s var(--ease-smooth) 0s;
 
         img {
           width: clamp-fluid(20, 60);
+          height: clamp-fluid(20, 60);
           aspect-ratio: 1 / 1;
           object-fit: cover;
           border-radius: clamp-fluid(6, 12);
+          transition:
+            width 1.2s var(--ease-smooth) 0s,
+            height 1.2s var(--ease-smooth) 0s;
         }
 
         .info {
           display: flex;
-          gap: to-rem(2);
           flex-direction: column;
           align-items: flex-start;
           text-align: left;
@@ -465,6 +581,7 @@ import Layout from '../layouts/Layout.astro';
         .sub {
           line-height: 1;
           color: var(--c-light);
+          transition: font-size 1.2s var(--ease-smooth) 0s;
         }
 
         .title {
@@ -562,6 +679,32 @@ import Layout from '../layouts/Layout.astro';
         width: 100%;
         height: 100%;
         border-radius: 0;
+
+        .back {
+          opacity: 1;
+          transition-delay: 0.4s;
+        }
+
+        .meta {
+          top: 70vh;
+          transition-delay: 0.2s;
+
+          img {
+            width: clamp-fluid(80, 140);
+            height: clamp-fluid(80, 140);
+            transition-delay: 0.2s;
+          }
+
+          .title {
+            font-size: clamp-fluid(14, 30);
+            transition-delay: 0.2s;
+          }
+
+          .sub {
+            font-size: clamp-fluid(12, 26);
+            transition-delay: 0.2s;
+          }
+        }
       }
 
       &.disable-transition {
